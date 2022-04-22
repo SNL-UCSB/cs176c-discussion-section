@@ -21,13 +21,6 @@ def ip_str_to_int(ip_str):
         return None
 
 
-def get_key2pathdict(all_csv_paths):
-    return_dict = defaultdict(list)
-    for k, csv_path in enumerate(all_csv_paths):
-        return_dict[k].append(str(csv_path))
-    return return_dict
-
-
 def transform_and_store(ctx, base_store_path, key2pathdict):
     for k, csv_paths in key2pathdict.items():
         all_dfs = []
@@ -59,7 +52,7 @@ def main():
 
     ctx = SparkSession \
         .builder \
-        .config("spark.driver.memory", '100G') \
+        .config("spark.driver.memory", '4G') \
         .config("spark.ui.killEnabled", False) \
         .getOrCreate()
     ctx.sparkContext.setLogLevel('OFF')
