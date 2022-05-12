@@ -7,6 +7,7 @@
 ```bash
 $ conda create -n spark
 $ conda activate spark && conda install -y pyspark
+$ conda install -y jupyter matplotlib numpy
 ```
 4. Update `set_env.sh` script with your path to the python interpreter
 ```bash
