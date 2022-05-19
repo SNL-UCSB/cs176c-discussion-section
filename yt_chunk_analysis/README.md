@@ -40,6 +40,7 @@ $ jupyter notebook
 
 ## FAQs
 1. I get a `tshark: command not found` even though I already have Wireshark installed
+
    You may have to create a symbolic link to the `tshark` executable as explained in this [SO post][3]. Alternatively, you can add the Wireshark directory to your PATH env variable like follows:
    ```bash
    $ export PATH=C:\Program Files\Wireshark:$PATH
