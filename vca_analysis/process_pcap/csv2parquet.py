@@ -28,12 +28,12 @@ def ip_str_to_int(ip_str):
 def tcp_change_column_names_and_project(df):
     df = df.select('ts', 'sIP', 'tcp_sPort', 'dIP', 'tcp_dPort', 'ip_len', 'ip_hdr_len',
                    'ip_proto', 'tcp_flags', 'tcp_seq', 'tcp_ack',
-                   'tls_hostname', 'dns_hostname', 'dns_ip', 'rtp_payload_type',
-                   'rtp_ts', 'rtp_ext_flag', 'rtp_ext_len', 'rtp_padding_len')
+                   'tls_hostname', 'dns_hostname', 'dns_ip', 'rtp_seq', 'rtp_payload_type',
+                   'rtp_ts', 'rtp_marker', 'rtp_ext_flag', 'rtp_ext_len', 'rtp_padding_len')
     df = df.toDF('ts', 'sIP', 'sPort', 'dIP', 'dPort', 'ip_len', 'ip_hdr_len',
                  'ip_proto', 'tcp_flags', 'tcp_seq', 'tcp_ack',
-                 'tls_hostname', 'dns_hostname', 'dns_ip', 'rtp_payload_type',
-                 'rtp_ts', 'rtp_ext_flag', 'rtp_ext_len', 'rtp_padding_len')
+                 'tls_hostname', 'dns_hostname', 'dns_ip', 'rtp_seq', 'rtp_payload_type',
+                 'rtp_ts', 'rtp_marker', 'rtp_ext_flag', 'rtp_ext_len', 'rtp_padding_len')
     df = df.filter(df['ip_proto'] == '6')
     df = df.withColumn("tcp_flags", hex_to_int(df["tcp_flags"]).cast(ShortType()))
     return df
@@ -42,12 +42,12 @@ def tcp_change_column_names_and_project(df):
 def udp_change_column_names_and_project(df):
     df = df.select('ts', 'sIP', 'udp_sPort', 'dIP', 'udp_dPort', 'ip_len', 'ip_hdr_len',
                    'ip_proto', 'tcp_flags', 'tcp_seq', 'tcp_ack',
-                   'tls_hostname', 'dns_hostname', 'dns_ip', 'rtp_payload_type',
-                   'rtp_ts', 'rtp_ext_flag', 'rtp_ext_len', 'rtp_padding_len')
+                   'tls_hostname', 'dns_hostname', 'dns_ip', 'rtp_seq', 'rtp_payload_type',
+                   'rtp_ts', 'rtp_marker', 'rtp_ext_flag', 'rtp_ext_len', 'rtp_padding_len')
     df = df.toDF('ts', 'sIP', 'sPort', 'dIP', 'dPort', 'ip_len', 'ip_hdr_len',
                  'ip_proto', 'tcp_flags', 'tcp_seq', 'tcp_ack',
-                 'tls_hostname', 'dns_hostname', 'dns_ip', 'rtp_payload_type',
-                 'rtp_ts', 'rtp_ext_flag', 'rtp_ext_len', 'rtp_padding_len')
+                 'tls_hostname', 'dns_hostname', 'dns_ip', 'rtp_seq', 'rtp_payload_type',
+                 'rtp_ts', 'rtp_marker', 'rtp_ext_flag', 'rtp_ext_len', 'rtp_padding_len')
     df = df.filter(df['ip_proto'] == '17')
     return df
 
@@ -76,8 +76,10 @@ def transform_and_store(ctx, base_store_path, key2pathdict):
                 df = df.withColumn("tls_hostname", df["tls_hostname"].cast(StringType()))
                 df = df.withColumn("dns_hostname", df["dns_hostname"].cast(StringType()))
                 df = df.withColumn("dns_ip", df["dns_ip"].cast(StringType()))
+                df = df.withColumn("rtp_seq", df["rtp_seq"].cast(IntegerType()))
                 df = df.withColumn("rtp_payload_type", df["rtp_payload_type"].cast(StringType()))
                 df = df.withColumn("rtp_ts", df["rtp_ts"].cast(LongType()))
+                df = df.withColumn("rtp_marker", df["rtp_marker"].cast(BooleanType()))
                 df = df.withColumn("rtp_ext_flag", df["rtp_ext_flag"].cast(BooleanType()))
                 df = df.withColumn("rtp_ext_len", df["rtp_ext_len"].cast(IntegerType()))
                 df = df.withColumn("rtp_padding_len", df["rtp_padding_len"].cast(ShortType()))
