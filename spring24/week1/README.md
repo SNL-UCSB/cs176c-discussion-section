@@ -1,3 +1,7 @@
+Course Repo: https://github.com/SNL-UCSB/cs176c-discussion-section
+
+Download these files before we begin!
+
 PCAP files:
 
 speedtest_short_range: https://drive.google.com/file/d/1W_FyI7vvRDZegpIXgwNJSTuqZjTi6Tkz/view?usp=drive_link
