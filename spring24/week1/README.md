@@ -4,4 +4,4 @@ speedtest_short_range: https://drive.google.com/file/d/1W_FyI7vvRDZegpIXgwNJSTuq
 
 speedtest_long_range: https://drive.google.com/file/d/1uzl1WZ4ZvlTCZ8hQnKHiAnyW6sqlH-Mp/view?usp=drive_link
 
-wlan_monitor: √
+wlan_monitor: https://drive.google.com/file/d/1ae3_odggbwmwzmMICTMQJFkztIFnKSsu/view?usp=drive_link
