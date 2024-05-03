@@ -23,7 +23,7 @@ $ which python
 # copy output of the above command and replace <PATH_TO_PYTHON_INTERPRETER>
 # with the output in set_env.sh
 ```
-
+8. Download the yt.pcap from the link below and put it in the main directory in yt_chunk_analysis : https://drive.google.com/file/d/11D8yqprLbwHhfmWBS1nZL8wryvMcqVWS/view?usp=sharing
 ## Converting PCAP to Parquet
 ```bash
 $ conda activate spark
