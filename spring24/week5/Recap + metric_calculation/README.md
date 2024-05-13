@@ -5,7 +5,7 @@
 ```bash
 $ conda create -n spark
 $ conda activate spark && conda install -y pyspark
-$ conda install -y jupyter matplotlib numpy
+$ conda install -y jupyter matplotlib numpy pandas
 ```
 5. [Windows Only] Install `m2-base` in your conda environment to be able to run bash commands in the 'Anaconda Prompt'
 ```bash
