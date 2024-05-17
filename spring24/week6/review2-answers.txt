@@ -1,0 +1,9 @@
+3. What are peer to peer connections, and how can they work amidst NAT?
+    - p2p connections are when data is sent directly between two end hosts, no server involved in data transfer. These connections can be setup using STUN
+4. What STUN requests are made and who they resolve to?
+    - STUN stands for Session Traversal Utilies over NAT, allows you to initiate connection with other peers by creating an entry in your NAT, so when the peer connection is initiated, the NAT will not drop the packets
+5. How does STUN fall short in identifying services that are being used?
+    - public STUN servers can be used that aren't always indicative of the service being used
+6. What are the two IP addresses used in the video call within this pcap?
+    - 192.168.0.203
+    - 192.168.0.121

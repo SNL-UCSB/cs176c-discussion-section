@@ -1,0 +1,13 @@
+1. What are the benefits of UDP / TCP in the case of video streaming?
+    - TCP
+        - reliability
+    - UDP
+        - lower latency
+
+2. What DNS requests are made from your laptop when you go to a video link on www.youtube.com
+    - recursive DNS query for youtube (if not cached)
+    - DNS queries for media servers hosting content for video
+    
+3. What are the benfits of chunk-based video streaming?
+    - store the content and different sizes for adaptive bitrate
+    - entire video doesn't need to live on a single server
