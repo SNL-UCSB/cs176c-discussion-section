@@ -1,0 +1,13 @@
+import matplotlib.pyplot as mpl
+
+mpl.figure(figsize=(10, 6))
+
+for ssrc in sorted(video_pd['rtp_ssrc_id'].unique()):
+    series = video_pd[video_pd['rtp_ssrc_id'] == ssrc]
+    mpl.plot(series['frame_end_time'], series['frame_size'], label=ssrc)
+
+mpl.xlabel('Frame Arrival Time')
+mpl.ylabel('Frame Size (bytes)')
+mpl.legend()
+
+mpl.show()

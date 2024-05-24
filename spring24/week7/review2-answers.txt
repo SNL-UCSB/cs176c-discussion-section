@@ -1,0 +1,8 @@
+4. Why does each RTP stream need to have its own unique SSRC id?   
+    - All streams are sent over the same UDP flow, audio and video packets needs to be distinguished so they can be reassembled separately
+5. How many different RTP streams are present in this packet capture? How many in each direction?
+    - 4 RTP streams, 2 in each direction
+6. Can you identify the media type for each RTP stream? How bulletproof is the methodology?
+    - 0x55934d58 and 0x989254a4 are video
+    - 0x06ec3145 and 0xd92d7a3b are audio
+    - Using the total bytes sent over the stream. This works in this situation but can be faulty when we compare streams of different durations for different services that may use different encodings, causing the total bytes sent over the RTP stream to be too coarse grained a metric

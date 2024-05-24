@@ -1,0 +1,20 @@
+fps_window = Window.partitionBy(*ssrc_flow_fields).orderBy("frame_end_time").rangeBetween(-1, 0)
+video_frames_df = video_frames_df.withColumn("fps", F.size(F.collect_set('frame_num').over(fps_window)))
+
+fps_pd = video_frames_df.select('frame_num', 'frame_end_time', 'fps', 'rtp_ssrc_id')\
+                      .sort('frame_num')\
+                      .toPandas()
+
+import matplotlib.pyplot as mpl
+
+mpl.figure(figsize=(10, 6))
+
+for ssrc in sorted(fps_pd['rtp_ssrc_id'].unique()):
+    series = fps_pd[fps_pd['rtp_ssrc_id'] == ssrc]
+    mpl.plot(series['frame_end_time'], series['fps'], label=ssrc)
+
+mpl.xlabel('Frame Number')
+mpl.ylabel('FPS')
+mpl.legend()
+
+mpl.show()

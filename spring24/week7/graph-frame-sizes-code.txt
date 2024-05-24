@@ -1,0 +1,13 @@
+import matplotlib.pyplot as mpl
+
+mpl.figure(figsize=(10, 6))
+
+for ssrc in sorted(frames_pd['rtp_ssrc_id'].unique()):
+    series = frames_pd[frames_pd['rtp_ssrc_id'] == ssrc]
+    mpl.plot(series['frame_num'], series['frame_size'], label=ssrc)
+
+mpl.xlabel('Frame Number')
+mpl.ylabel('Frame Size (bytes)')
+mpl.legend()
+
+mpl.show()
