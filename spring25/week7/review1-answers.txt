@@ -1,0 +1,10 @@
+1. What are the relevant IP addresses for this call?
+   - 192.168.0.203 (client)
+   - 107.223.12.141 (server / peer)
+       - You can find the most significant flows quickly in wireshark using Statistics > Endpoints > UDP
+2. Is this conference call more likely using an SFU model or P2P model?
+    - This is likely a P2P connection
+    - If we resolve the IP of the server / peer, we see the ASN owner is AT&T, which is a well-known ISP provider
+3. What service / application is likely be used for this video conference call?
+    - Messenger (Meta)
+    - Best we can do is observe DNS requests or hostnames in TLS handshakes to reveal information about the entities we are connecting to

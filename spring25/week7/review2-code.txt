@@ -1,0 +1,6 @@
+ssrc_flow_fields = ['src_ip', 'src_port', 'dst_ip', 'dst_port', 'rtp_ssrc_id']
+rtp_streams = rtp_df.groupBy(*ssrc_flow_fields)\
+                    .agg(F.count('*').alias('num_pkts'),
+                         F.sum('udp_len').alias('total_bytes'))
+
+rtp_streams.sort('src_ip').show(truncate=False)

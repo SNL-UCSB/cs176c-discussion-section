@@ -1,0 +1,16 @@
+- How many total packets are sniffed in monitor mode?
+    - 8,134 packets
+- How many management / control / data frames are present in the packet capture?
+    - 3,769 - 46.3% of packets (management) (wlan.fc.type==0)
+    - 2,368 - 29.1% of packets (control) (wlan.fc.type==1)
+    - 1997 - 24.6% of packets (data) (wlan.fc.type==2)
+- How many probe requests are sent from the client?
+    - (wlan.ta == f8:4d:89:7b:42:83)
+    - 2 requests
+- How many probe responses are sent from the AP to the client?
+    - (wlan.ta == e4:c3:2a:92:b6:57) and (wlan.ra == f8:4d:89:7b:42:83)
+    - 8 responses
+- What is the SSID of the network that the client is connected to?
+    - Suurti
+- Why would the transmitter address be equal to the source address?
+    - Only 1 hop from client to gateway. In case of multi hop / mesh network, the transmitter address will update but the source address will remain unchanged.

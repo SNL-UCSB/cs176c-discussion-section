@@ -1,0 +1,4 @@
+7. Why is it only possible to use rtp as a display filter in wireshark and not a capture filter?
+    - Because wireshark cannot logically confirm that a pacture is RTP at capture time, there is no field in the packet that specifies the application protocol is RTP. Other header protocols could parse as RTP, but maybe some packets the fields wouldn't make sense. We have to manually set the packets for a specific port to decode to RTP.
+8. How many unique SSRCs do you observe in this pcap?
+    - 4, 2 unique for inbound 2 unique for outbound from the client 192.168.0.203

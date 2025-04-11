@@ -1,0 +1,52 @@
+video_frames_df = video_frames_df.withColumn('sampling_rate_hz', F.lit(90000.0).cast(DoubleType()))
+video_frame_jitter = video_frames_df.withColumn('transit_time', col('frame_end_time') - ((1.0/(col('sampling_rate_hz')*1.0)) * col('rtp_timestamp'))) \
+                                    .withColumn('prev_transit_time', F.lag(col('transit_time'), 1).over(frame_window)) \
+                                    .withColumn('delta_transit_time', F.abs(col('transit_time') - col('prev_transit_time')))
+
+def calculate_estimated_jitter(iterator):
+    estimated_jitter = None
+    init_jitter = None
+    for row in iterator:
+        try:
+            if (row.delta_transit_time is None):
+                continue
+            elif (init_jitter is None):
+                init_jitter = 0.0625 * row.delta_transit_time
+                yield row.src_ip, row.src_port, row.dst_ip, row.dst_port, row.rtp_ssrc_id, row.rtp_timestamp, row.frame_end_time, row.frame_num, None
+            elif (estimated_jitter is None):
+                estimated_jitter = 0.0625 * (row.delta_transit_time - init_jitter)
+                yield row.src_ip, row.src_port, row.dst_ip, row.dst_port, row.rtp_ssrc_id, row.rtp_timestamp, row.frame_end_time, row.frame_num, estimated_jitter
+            else:
+                estimated_jitter += 0.0625 * (row.delta_transit_time - estimated_jitter)
+                yield row.src_ip, row.src_port, row.dst_ip, row.dst_port, row.rtp_ssrc_id, row.rtp_timestamp, row.frame_end_time, row.frame_num, estimated_jitter
+        except:
+            yield row.src_ip, row.src_port, row.dst_ip, row.dst_port, row.rtp_ssrc_id, row.rtp_timestamp, row.frame_end_time, row.frame_num, None
+
+video_frame_jitter = video_frame_jitter.repartition(*ssrc_flow_fields).orderBy("rtp_timestamp").rdd.mapPartitions(calculate_estimated_jitter) \
+                        .toDF(["src_ip",
+                               "src_port",
+                               "dst_ip",
+                               "dst_port",
+                               "rtp_ssrc_id",
+                               "rtp_timestamp",
+                               "frame_end_time",
+                               "frame_num",
+                               "jitter"])
+
+video_jitter_pd = video_frame_jitter.select('frame_num', 'frame_end_time', 'jitter', 'rtp_ssrc_id')\
+                      .sort('frame_num')\
+                      .toPandas()
+
+import matplotlib.pyplot as mpl
+
+mpl.figure(figsize=(10, 6))
+
+for ssrc in sorted(video_jitter_pd['rtp_ssrc_id'].unique()):
+    series = video_jitter_pd[video_jitter_pd['rtp_ssrc_id'] == ssrc]
+    mpl.plot(series['frame_end_time'], series['jitter'], label=ssrc)
+
+mpl.xlabel('Frame Arrival Time')
+mpl.ylabel('Jitter (s)')
+mpl.legend()
+
+mpl.show()

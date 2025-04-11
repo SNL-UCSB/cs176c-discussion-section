@@ -1,0 +1,6 @@
+9. Do you observe a sequence number-like header extension? If so which ID?  
+    - hdr extension id 3
+10. Do you observe a timestamp-like header extension? If so which ID?   
+    - hdr extension id 2
+11. Repeat this for the flow in the other direction, do you observe the same results?  
+    - Yes, we observe these header extensions in both directions

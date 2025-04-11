@@ -1,0 +1,8 @@
+frame_fields = ['src_ip', 'src_port', 'dst_ip', 'dst_port', 'rtp_ssrc_id', 'rtp_timestamp']
+ssrc_flow_fields = ['src_ip', 'src_port', 'dst_ip', 'dst_port', 'rtp_ssrc_id']
+frames_per_stream = rtp_df.select(*frame_fields)\
+                    .distinct() \
+                    .groupBy(*ssrc_flow_fields) \
+                    .agg(F.count('*').alias('num_frames'))
+
+frames_per_stream.sort('src_ip').show(truncate=False)

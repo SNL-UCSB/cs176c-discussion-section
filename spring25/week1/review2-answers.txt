@@ -1,0 +1,15 @@
+- What is the IP of the server(s) that are being used for the speedtest?
+    - 184.182.243.145
+    - 199.195.213.181
+    - 64.201.123.18
+    - 71.95.173.65
+- How many TCP packets are sent total between the client host and speedtest servers?
+    - (((ip.src == 192.168.0.203) and ((ip.dst == 184.182.243.145) or (ip.dst == 199.195.213.181) or (ip.dst == 64.201.123.18) or (ip.dst == 71.95.173.65))) or ((ip.dst == 192.168.0.203) and ((ip.src == 184.182.243.145) or (ip.src == 199.195.213.181) or (ip.src == 64.201.123.18) or (ip.src == 71.95.173.65))))
+    - 132,395 packets
+- How many packets are retransmitted in the TCP connections during the speedtest?
+    - 9,456 packets
+- What is the retransmission rate for the TCP packets between the client and server during the speedtest?
+    - 7.1% of TCP packets retransmitted
+- What is the relationship between distance vs. signal strength and distance vs. loss over wireless?
+    - As distance increases signal strength decreases over wireless
+    - As distance increases loss increases over wireless

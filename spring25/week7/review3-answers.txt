@@ -1,0 +1,5 @@
+7. How many frames are sent by each RTP stream?
+    - 0x55934d58: 1857
+    - 0x06ec3145: 1390
+    - 0x989254a4: 3718
+    - 0xd92d7a3b: 3662

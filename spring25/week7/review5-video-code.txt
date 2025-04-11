@@ -1,0 +1,9 @@
+fps_window = Window.partitionBy(*ssrc_flow_fields).orderBy("frame_end_time").rangeBetween(-1, 0)
+video_frames_df = video_frames_df.withColumn("fps_min_rtp_timestamp", F.min('rtp_timestamp').over(fps_window))
+video_frames_df = video_frames_df.withColumn("fps_max_rtp_timestamp", F.max('rtp_timestamp').over(fps_window))
+video_frames_df = video_frames_df.withColumn("fps_delta_rtp_timestamp", col('fps_max_rtp_timestamp') - col('fps_min_rtp_timestamp'))
+
+video_sampling_rates = video_frames_df.groupBy(*ssrc_flow_fields)\
+                                      .agg((F.percentile_approx('fps_delta_rtp_timestamp', 0.5).cast(DoubleType())).alias('sampling_rate'))
+
+video_sampling_rates.show(truncate=False)

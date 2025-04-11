@@ -1,0 +1,4 @@
+11. What are the sampling rates used by the audio RTP streams in this capture?  
+    - 48kHz  
+12. What are the sampling rates used by the video RTP streams in this capture?   
+    - 90kHz  

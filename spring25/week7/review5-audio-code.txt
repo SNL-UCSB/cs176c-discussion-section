@@ -1,0 +1,10 @@
+fps_window = Window.partitionBy(*ssrc_flow_fields).orderBy("frame_end_time").rangeBetween(-1, 0)
+audio_frames_df = audio_frames_df.withColumn("fps_min_rtp_timestamp", F.min('rtp_timestamp').over(fps_window))
+audio_frames_df = audio_frames_df.withColumn("fps_max_rtp_timestamp", F.max('rtp_timestamp').over(fps_window))
+audio_frames_df = audio_frames_df.withColumn("fps_delta_rtp_timestamp", col('fps_max_rtp_timestamp') - col('fps_min_rtp_timestamp'))
+
+audio_sampling_rates = audio_frames_df.groupBy(*ssrc_flow_fields)\
+                                      .agg((F.percentile_approx('fps_delta_rtp_timestamp', 0.5).cast(DoubleType())).alias('sampling_rate'),
+                                           (F.avg('fps_delta_rtp_timestamp').cast(DoubleType())).alias('avg_sampling_rate'))
+
+audio_sampling_rates.show(truncate=False)
